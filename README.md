@@ -1,4 +1,8 @@
-Inventory
+Sample Inventory Management with Elixir
 =========
 
-** TODO: Add description **
+To run example:
+
+```bash
+mix run example.exs
+```
