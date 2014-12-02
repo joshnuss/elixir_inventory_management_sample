@@ -1,7 +1,7 @@
 Example Inventory Management Subsystem with Elixir
 =========
 
-It is advantageos for LOB (line-of-business) apps to be modularized into separate subsystems. Each subsystem is responsible for just one logical function, easing maintenance costs. For example an inventory system would be made up of several subsystems: inventory management, credit card processing, order fulfilment, product catalog, cart management, membership and several others. The application then becomes a collection of out of the box services and some modified services.
+It is advantageos for LOB (line-of-business) apps to be modularized into separate subsystems. Each subsystem is responsible for just one logical function, easing complexity. For example, an e-commerce system would be made up of several subsystems: inventory management, credit card processing, order fulfilment, product catalog, cart management, membership and several others. The application then becomes just a collection of out of the box services with some modified ones.
 
 For maximum re-usablity, each subsystem should offer several options (Provider pattern). For example an inventory service may offer these providers out of the box:
 
@@ -13,9 +13,10 @@ For maximum re-usablity, each subsystem should offer several options (Provider p
 
 Each of these processes understands some simple messages: `:increase`, `:decrease`, `:lookup` and `:history`
 
-The big win is that you can roll your own when needed. Maybe you have multiple warehouses with rules about what to do based on the product type, or maybe you only track inventory for certain products and not for others. Any scenario can be accomplished by adding a new provider. You could even create a hybrid provider and use pattern matching, i.e. t-shirt -> user untracked, watches -> user db. Here's an example of a custom provider:
+The big win is that you can roll your own when needed. Maybe you have multiple warehouses with rules about what to do based on the product type, or maybe you only track inventory for certain products and not for others. Most scenarios can be accomplished by adding a new provider. You could even create a hybrid provider and use pattern matching, i.e. t-shirt -> user untracked, watches -> user db. Here's an example of a custom provider:
 
 ```elixir
+# Hybrid provider example
 defmodule MyCustomInventoryProvider do
   use GenServer.Behaviour
 
@@ -41,7 +42,7 @@ defmodule MyCustomInventoryProvider do
   # ...
 end
 ```
-Each service also fire events. In this example the services fire events called `{:increased, id, reason, count}` and `{:decreased, id, reason, count}` when stock changes. You could handle these events by registering an event handler with the Inventory.Events process. The handler could then do something useful (for example notifying people when an item on their wishlist is back in stock)
+Each service also fire events. In this inventory example the services fire events `{:increased, id, reason, count}` and `{:decreased, id, reason, count}` whenever stock changes. Any process could handle these events by registering an event handler with the Inventory.Events process. The handler could then do something useful (for example notifying people when an item on their wishlist is back in stock)
 
 ```elixir
 defmodule WishListHandler do
