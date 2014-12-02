@@ -70,7 +70,7 @@ Inventory.Supervisor.start_link(Inventory.Local)
 Inventory.lookup("t-shirt") # dont care what underlying provider is used
 ```
 
-The wrapper functions also provide convenient function, for example `adjust` can be written in terms of `increase` and `decrease`:
+The wrapper functions also provide convenience functions, for example `Inventory.adjust` is written using `Inventory.increase` and `Inventory.decrease`:
 
 ```elixir
 def adjust(id, reason, count) when count > 0 do
