@@ -1,3 +1,4 @@
+# An inventory server which stores stock movements in memory
 defmodule Inventory.Local do
   use GenServer
 

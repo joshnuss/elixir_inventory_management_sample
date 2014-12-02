@@ -1,3 +1,5 @@
+# An inventory server which always responds to
+# lookups with {:available, 0} and ignores all other messages
 defmodule Inventory.Untracked do
   use GenServer
 
