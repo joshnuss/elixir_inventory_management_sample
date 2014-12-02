@@ -14,13 +14,13 @@ defmodule Inventory.Untracked do
     {:reply, [], state}
   end
 
-  def handle_call({:increase, _id, _reason, count}, _from, state) do
-    GenEvent.notify(state.events, {:increased, count})
+  def handle_call({:increase, id, reason, count}, _from, state) do
+    GenEvent.notify(state.events, {:increased, id, reason, count})
     {:reply, {:increased, count}, state}
   end
 
-  def handle_call({:decrease, _id, _reason, count}, _from, state) do
-    GenEvent.notify(state.events, {:decreased, count})
+  def handle_call({:decrease, id, reason, count}, _from, state) do
+    GenEvent.notify(state.events, {:decreased, id, reason, count})
     {:reply, {:decreased, -count}, state}
   end
 end

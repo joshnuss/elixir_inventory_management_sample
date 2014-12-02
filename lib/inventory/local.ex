@@ -28,7 +28,7 @@ defmodule Inventory.Local do
       HashDict.put(dict, id, [{reason, count} | history])
     end
     
-    GenEvent.notify(state.events, {:increased, count})
+    GenEvent.notify(state.events, {:increased, id, reason, count})
 
     {:reply, {:increased, count}, state}
   end
@@ -39,7 +39,7 @@ defmodule Inventory.Local do
       HashDict.put(dict, id, [{reason, -count} | history])
     end
 
-    GenEvent.notify(state.events, {:decreased, count})
+    GenEvent.notify(state.events, {:decreased, id, reason, count})
 
     {:reply, {:decreased, -count}, state}
   end
