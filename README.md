@@ -5,7 +5,7 @@ It is advantageos for LOB (line-of-business) apps to be modularized into separat
 
 For maximum re-usablity, each subsystem should offer several options (Provider pattern). For example an inventory service may offer these providers out of the box:
 
-- **Untracked**: dont care about inventory, always respond that its available
+- **Untracked**: dont care about inventory, always respond that item is available
 - **DB**: store inventory history in local db, use db to determine availbility
 - **SAP**: store inventory in SAP
 - **Shopify**: store inventory in Shopify
@@ -60,6 +60,28 @@ end
 GenEvent.add_handler(Inventory.Events, WishListHandler, [])
 #=> :ok
 ```
+
+When calling the inventory sub-system, its important that the caller dont know what underlying provider is running. Instead the `Inventory` module contains wrapper functions which can be called like this:
+
+``` elixir
+
+Inventory.Supervisor.start_link(Inventory.Local)
+
+Inventory.lookup("t-shirt") # dont care what underlying provider is used
+```
+
+The wrapper functions also provide convenient function, for example `adjust` can be written in terms of `increase` and `decrease`:
+
+```elixir
+def adjust(id, reason, count) when count > 0 do
+  increase(id, reason, count)
+end
+
+def adjust(id, reason, count) when count < 0 do
+  decrease(id, reason, -count)
+end
+```
+
 ## Example
 
 https://github.com/joshnuss/elixir_inventory_management_sample/blob/master/example.exs
