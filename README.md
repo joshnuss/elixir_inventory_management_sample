@@ -13,7 +13,7 @@ For maximum re-usablity, each subsystem should offer several options (Provider p
 
 Each of these processes understands some simple messages: `:increase`, `:decrease`, `:lookup` and `:history`
 
-The big win is that you can roll your own when needed. Maybe you have multiple warehouses with rules about what to do based on the product type, or maybe you only track inventory for certain products and not for others. Most scenarios can be accomplished by adding a new provider. You could even create a hybrid provider and use pattern matching, i.e. t-shirt -> user untracked, watches -> user db. Here's an example of a custom provider:
+The big win is that you can roll your own when needed. Maybe you have multiple warehouses with special rules based on the product type, or maybe you track inventory only for certain products and not others. Most scenarios could be accomplished by adding a new provider. You could even create a hybrid provider and use pattern matching, i.e. t-shirt -> untracked, watches -> use db. Here's an example of a custom hybrid provider:
 
 ```elixir
 # Hybrid provider example
